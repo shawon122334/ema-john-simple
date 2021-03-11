@@ -5,10 +5,17 @@
     border-bottom: 1px solid lightgrey;
 }
 .product-details{
-    margin-left: 10px;
+    margin-left: 20px;
 
 }
 .product-name{
     color:blue;
     font-weight: 500;
+}
+.addToCartBtn{
+    background-color: goldenrod;
+    width: 150px;
+    height:30px;
+    border:1px solid grey;
+    border-radius:6px;
 }
