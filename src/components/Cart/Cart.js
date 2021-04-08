@@ -18,7 +18,6 @@ const Cart = (props) => {
         shipping=4.55;
     }
     else if(total>0){
-        shipping=20.99;
     }
 
     const tax=total/10;
@@ -30,7 +29,7 @@ const Cart = (props) => {
     }
     return (
         <div>
-            <h3>Order Summery</h3>
+            <h3 className="text-primary">Order Summery</h3>
             <h4>Items Ordered: {cart.length}</h4>
             <h4><small>Shipping : {formatNumber(shipping)}</small></h4>
             <h4><small>Tax + Vat : {formatNumber(tax)}</small></h4>
