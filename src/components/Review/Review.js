@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import fakeData from '../../fakeData';
-import { getDatabaseCart } from '../../utilities/databaseManager';
+import { getDatabaseCart, removeFromDatabaseCart } from '../../utilities/databaseManager';
+import Cart from '../Cart/Cart';
 import ReviewItems from '../ReviewItems/ReviewItems';
 
 const Review = () => {
@@ -21,14 +22,27 @@ const Review = () => {
             return product; 
         });
         // console.log(getProduct);
-        setReview(getProduct);
+        setReview(getProduct);  
     },[]);
+    const removeBtn=(productKey)=> {
+        console.log('remove button clicked', productKey);
+        //it filters all review product except the key we provided
+        const removedProduct=review.filter(pd=>pd.key!==productKey);
+        setReview(removedProduct);
+        removeFromDatabaseCart(productKey);
+    };
     return (
-        <div>
-            <h2>Total product review : {review.length}</h2>
+        <div className="shopContainer">
+            <div className="productContainer">
             {
-                review.map(pd=> <ReviewItems product={pd}></ReviewItems>)
+                review.map(pd=> <ReviewItems removeBtn={removeBtn} key={pd.key} product={pd}></ReviewItems>)
             }
+            </div>
+            <div className="cartContainer">
+                <Cart cart={review}></Cart>
+            </div>
+             
+            
         </div>
     );
 };
