@@ -12,14 +12,36 @@ const Shop = () => {
     const [cart,setCart]=useState([]);
 
     const handleAddToCart = (product) => {
-        // console.log('cart added', product);
-        const newCart=[...cart,product];
-        setCart(newCart);
+        // what we are doing here is we copied previous cart and added the product we are getting form product component , we get Nan when we add product form shop because we created product.quantity that is not available in shop but in review 
+        // in line 22 we see addToDatabaseCart has a count that is a quantity but we did not set it in shop that is the problem we are getting Nan so we solve it here 
+        // const newCart=[...cart,product];
+        // setCart(newCart);
+        // // local storages
+        // const sameProducts= newCart.filter(pd=> pd.key===product.key)
+        // const count=sameProducts.length;
+        // addToDatabaseCart(product.key,count)
+        //-------------------------------------
+        //first step we match the key to the cart key 
+        const toBeAddedKey=product.key;
+        const sameProducts= cart.find(pd=> pd.key=== toBeAddedKey)
+        let count=1;
+        let newCart;
+        if(sameProducts){
+            count= sameProducts.quantity+1;
+            sameProducts.quantity=count;
+            const others=cart.filter(pd=>pd.key !== toBeAddedKey)
+            newCart=[...others,sameProducts];
 
-        // local storages
-        const sameProducts= newCart.filter(pd=> pd.key===product.key)
-        const count=sameProducts.length;
+        }
+        else{
+            product.quantity=1;
+            newCart=[...cart,product];
+        }
+        setCart(newCart);
+        //saving data to local storages
+        
         addToDatabaseCart(product.key,count)
+    
     }
     return (
         <div className='shopContainer'>
